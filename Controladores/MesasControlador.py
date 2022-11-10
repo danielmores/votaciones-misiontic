@@ -7,6 +7,8 @@ class MesasControlador():
     def __init__(self):
         self.repositorioMesas = RepositorioMesas()
 
+
+
     def index(self):
         return self.repositorioMesas.findAll()
 

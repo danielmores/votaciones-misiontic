@@ -15,6 +15,8 @@ class InterfaceRepositorio(Generic[T]):
         self.baseDatos = client[dataConfig["name-db"]]
         theClass = get_args(self.__orig_bases__[0])
         self.coleccion = theClass[0].__name__.lower()
+        print("self.colecion = " , self.coleccion)
+        print("self.colecion = ", theClass[0].__name__.lower())
 
     def loadFileConfig(self):
         with open('config.json') as f:
@@ -25,9 +27,9 @@ class InterfaceRepositorio(Generic[T]):
         laColeccion = self.baseDatos[self.coleccion]
         elId = ""
         item = self.transformRefs(item)
-        if hasattr(item, "id") and item._id != "":
+        if hasattr(item, "_id") and item._id != "":
             elId = item._id
-            _id =ObjectId(elId)
+            _id = ObjectId(elId)
             laColeccion = self.baseDatos[self.coleccion]
             delattr(item, "_id")
             item = item.__dict__
@@ -36,7 +38,8 @@ class InterfaceRepositorio(Generic[T]):
         else:
             _id = laColeccion.insert_one(item.__dict__)
             elId = _id.inserted_id.__str__()
-        x = laColeccion.find_one({"_id": ObjectId(elID)})
+
+        x = laColeccion.find_one({"_id": ObjectId(elId)})
         x["_id"] = x["_id"].__str__()
         return self.findById(elId)
 
