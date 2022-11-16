@@ -109,7 +109,10 @@ class InterfaceRepositorio(Generic[T]):
 
     def getValuesDBRefFromList(self, theList):
         newList = []
-        laColeccion = self.baseDatos[theList[0]._id.collection]
+        if isinstance(theList[0], dict):
+            return theList
+        else:
+            laColeccion = self.baseDatos[theList[0]._id.collection]
         for item in theList:
             value = laColeccion.find_one({"_id": ObjectId(item.id)})
             value["_id"] = value["_id"].__str__()

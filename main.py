@@ -10,10 +10,11 @@ app=Flask(__name__)
 cors = CORS(app)
 from Controladores.MesasControlador import MesasControlador
 from Controladores.VotosControlador import VotosControlador
+from Controladores.CandidatosControlador import CandidatosControlador
 
 miControladorMesa=MesasControlador()
 controladorVoto = VotosControlador()
-
+candidatoControlador = CandidatosControlador()
 @app.route("/",methods=['GET'])
 def test():
     json = {}
@@ -61,6 +62,26 @@ def crearVoto():
 @app.route("/votos/<string:id>",methods=['GET'])
 def getVoto(id):
     json=controladorVoto.show(id)
+    return jsonify(json)
+
+
+
+
+
+@app.route("/candidatos",methods=['GET'])
+def getCandidatos():
+    json=candidatoControlador.index()
+    return jsonify(json)
+
+@app.route("/candidatos",methods=['POST'])
+def crearCandidato():
+    data = request.get_json()
+    json=candidatoControlador.create(data)
+    return jsonify(json)
+
+@app.route("/candidatos/<string:id>",methods=['GET'])
+def getCandidato(id):
+    json=candidatoControlador.show(id)
     return jsonify(json)
 
 
