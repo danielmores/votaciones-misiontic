@@ -66,6 +66,12 @@ def getVoto(id):
 
 
 
+@app.route("/resultados/candidatos",methods=['GET'])
+def getResultadosCandidatos():
+    json=miControladorMesa.resultadosCandidatosYPartidos()
+    return jsonify(json)
+
+
 
 
 @app.route("/candidatos",methods=['GET'])

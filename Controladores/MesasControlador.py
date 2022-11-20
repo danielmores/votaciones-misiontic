@@ -1,12 +1,14 @@
 from repositoros.RepositorioMesas import RepositorioMesas
+from repositoros.VotosRepositorio import VotosRepositorio
 
 from Modelos.MesasModelo import MesasModelo
+from Modelos.VotosModelo import VotosModelo
 
 
 class MesasControlador():
     def __init__(self):
         self.repositorioMesas = RepositorioMesas()
-
+        self.repositorioVotos = VotosRepositorio()
 
 
     def index(self):
@@ -30,3 +32,6 @@ class MesasControlador():
 
     def delete(self, id):
         return self.repositorioMesas.delete(id)
+
+    def resultadosCandidatosYPartidos(self):
+        return self.repositorioVotos.getResultadoCandidatos()
